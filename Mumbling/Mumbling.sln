@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mumbling", "Mumbling\Mumbling.csproj", "{08E58B23-CBF9-474C-8723-950EBD26EECE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mumbling.Test", "Mumbling.Test\Mumbling.Test.csproj", "{40529C28-6870-41B5-A3E6-FD95E4C09C67}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{08E58B23-CBF9-474C-8723-950EBD26EECE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08E58B23-CBF9-474C-8723-950EBD26EECE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08E58B23-CBF9-474C-8723-950EBD26EECE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08E58B23-CBF9-474C-8723-950EBD26EECE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40529C28-6870-41B5-A3E6-FD95E4C09C67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40529C28-6870-41B5-A3E6-FD95E4C09C67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40529C28-6870-41B5-A3E6-FD95E4C09C67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40529C28-6870-41B5-A3E6-FD95E4C09C67}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
