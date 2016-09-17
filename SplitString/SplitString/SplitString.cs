@@ -12,28 +12,29 @@ namespace SplitString
     {
         public static string[] Solution(string str)
         {
-            var result = new List<string>();
-            var pairCounter = 1;
+            var result = new List<string>();            
             var pair = string.Empty;
             
             foreach (var item in str)
             {
-                if (pairCounter <= 2)
+                if (pair.Length < 2)
                 {
-                    pair = pair + item;
-                    pairCounter++;
+                    pair = pair + item;                    
                 }
                 else
                 {
                     result.Add(pair);
-                    pair = item.ToString();
-                    pairCounter = 1;
+                    pair = item.ToString();                    
                 }
             }
 
-            if (pairCounter == 1)
+            if (pair.Length == 1)
             {
                 result.Add(pair + "_");
+            }
+            else if (pair.Length == 2)
+            {
+                result.Add(pair);
             }
 
             return result.ToArray();
