@@ -6,23 +6,79 @@ using System.Threading.Tasks;
 
 namespace VasyaClerk
 {
+    using System.Diagnostics;
+
     public class Line
     {
         public static string Tickets(int[] peopleInLine)
         {
-            var pocket = 0;
+            foreach (var i in peopleInLine)
+            {
+                Console.WriteLine(i);
+            }
+           
+
+            var pocket = new int[2] {0, 0};
 
             foreach (var people in peopleInLine)
             {
-                pocket -= (people - 25);
-                if (pocket < 0)
+                if (!IsChangeable(pocket, people))
                 {
                     return "NO";
                 }
-                pocket += 25;
             }
 
             return "YES";
+        }
+
+        private static bool IsChangeable(int[] pocket, int bill)
+        {
+            if (bill == 25)
+            {
+                Change(ref pocket, bill);
+                return true;
+            }
+
+            if (bill == 50 && pocket[0] >= 1)
+            {
+                Change(ref pocket, bill);
+                return true;
+            }
+
+            if (bill == 100 && (pocket[1] >= 1 && pocket[0] >= 1) || pocket[0] >= 3)
+            {
+                Change(ref pocket, bill);
+                return true;
+            }
+
+            return false;
+        }
+
+        private static void Change(ref int[] pocket, int bill)
+        {
+            if (bill == 25)
+            {
+                pocket[0]++;
+            }
+
+            if (bill == 50)
+            {
+                pocket[0]--;
+                pocket[1]++;
+            }
+
+            if (bill == 100)
+            {
+                if (pocket[1] >= 1)
+                {
+                    pocket[0]--;
+                    pocket[1]--;
+                }
+                else
+                {
+                    pocket[0] -= 3;
+                }
+            }
         }
     }
 }

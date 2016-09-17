@@ -26,5 +26,12 @@ namespace VasyaClerk.Test
             int[] peopleInLine = new int[] { 25, 25, 25, 25, 50, 100, 50 };
             Assert.AreEqual("YES", Line.Tickets(peopleInLine));
         }
+
+        [TestMethod]
+        public void Test4()
+        {
+            int[] peopleInLine = new int[] { 25, 25, 25, 25, 25, 100, 100 };
+            Assert.AreEqual("NO", Line.Tickets(peopleInLine));
+        }
     }
 }
