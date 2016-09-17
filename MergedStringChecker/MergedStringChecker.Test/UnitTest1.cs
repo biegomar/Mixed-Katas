@@ -23,5 +23,17 @@ namespace MergedStringChecker.Test
         {
             Assert.IsFalse(StringMerger.isMerge("codewars", "cod", "wars"), "Codewars are not codwars");
         }
+
+        [TestMethod]
+        public void CanHandleExtraChars()
+        {
+            Assert.IsFalse(StringMerger.isMerge("codewars", "code", "warss"), "codewars is not codewarss");
+        }
+
+        [TestMethod]
+        public void CanHandleBananas()
+        {
+            Assert.IsTrue(StringMerger.isMerge("Bananas from Bahamas", "Bahas", "Bananas from am"), "Going bananas!");            
+        }
     }
 }
