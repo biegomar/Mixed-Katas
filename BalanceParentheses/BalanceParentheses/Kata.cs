@@ -10,48 +10,36 @@ namespace BalanceParentheses
     {
         public static bool IsBalanced(string s, string caps)
         {
-            var acceptedCaps = string.Empty;
-            var index = 0;
-            foreach (var item in caps)
-            {
-                if (index % 2 == 0)
-                {
-                    acceptedCaps += item;
-                }
-                index++;
-            }
-            return recursiveBalancer(s, caps, acceptedCaps);
-        }
+            var closeStack = new Stack<char>();
 
-        private static bool recursiveBalancer(string s, string caps, string acceptedCaps)
-        {
-            var index = 0;
-            while (!caps.Contains(s[index]))
+            foreach (var item in s)
             {
-                index++;
-            }
-
-            if (acceptedCaps.Contains(s[index]))
-            {
-                var newAcceptedCaps = string.Empty;
-                var capsIndex = 0;
-                foreach (var item in caps)
+                var capIndex = caps.IndexOf(item);
+                if (capIndex > -1)
                 {
-                    if (capsIndex % 2 == 0)
+                    if (capIndex % 2 == 0)
                     {
-                        newAcceptedCaps += item;
-                        if (s[capsIndex] == item)
+                        if (item == caps[capIndex+1] && closeStack.Count > 0 && closeStack.Peek() == item)
                         {
-                            newAcceptedCaps += caps[capsIndex + 1];
+                            closeStack.Pop();
+                        }
+                        else
+                        {
+                            closeStack.Push(caps[capIndex + 1]);
+                        }                        
+                    }
+                    else
+                    {
+                        var queueItem = closeStack.Pop();
+                        if (queueItem != caps[capIndex])
+                        {
+                            return false;
                         }
                     }
-                    capsIndex++;
                 }
-
-                return recursiveBalancer(s.Substring(index + 1), caps, newAcceptedCaps);
             }
 
-            return false;
+            return closeStack.Count == 0;
         }
     }
 }

@@ -11,13 +11,36 @@ namespace BalanceParantheses.Test
         [TestMethod]
         public void TestMethod1()
         {
-            Assert.AreEqual(true, Kata.IsBalanced("(Sensei says yes!)", "()"));
+            Assert.AreEqual(true, Kata.IsBalanced("(Sensei says yes!)", "()"));            
+        }
+
+        [TestMethod]
+        public void TestMethod2()
+        {           
             Assert.AreEqual(false, Kata.IsBalanced("(Sensei says no!", "()"));
+        }
 
-            Assert.AreEqual(true, Kata.IsBalanced("(Sensei [says] yes!)", "()[]"));
+        [TestMethod]
+        public void TestMethod3()
+        {
+            Assert.AreEqual(true, Kata.IsBalanced("(Sensei [says] yes!)", "()[]"));            
+        }
+
+        [TestMethod]
+        public void TestMethod4()
+        {
             Assert.AreEqual(false, Kata.IsBalanced("(Sensei [says) no!]", "()[]"));
+        }
 
-            Assert.AreEqual(true, Kata.IsBalanced("Sensei says -yes-!", "--"));
+        [TestMethod]
+        public void TestMethod5()
+        {
+            Assert.AreEqual(true, Kata.IsBalanced("Sensei says -yes-!", "--"));            
+        }
+
+        [TestMethod]
+        public void TestMethod6()
+        {
             Assert.AreEqual(false, Kata.IsBalanced("Sensei -says no!", "--"));
         }
     }
