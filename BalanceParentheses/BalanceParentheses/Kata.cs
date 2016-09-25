@@ -29,9 +29,8 @@ namespace BalanceParentheses
                         }                        
                     }
                     else
-                    {
-                        var queueItem = closeStack.Pop();
-                        if (queueItem != caps[capIndex])
+                    {                        
+                        if (closeStack.Count == 0 || closeStack.Pop() != caps[capIndex])
                         {
                             return false;
                         }

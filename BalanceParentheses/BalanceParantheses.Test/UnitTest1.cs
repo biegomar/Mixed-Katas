@@ -43,5 +43,33 @@ namespace BalanceParantheses.Test
         {
             Assert.AreEqual(false, Kata.IsBalanced("Sensei -says no!", "--"));
         }
+
+        [TestMethod]
+        public void TestMethod7()
+        {            
+            Assert.AreEqual(
+                true,
+                Kata.IsBalanced("(Hello Mother can you hear me?)[Monkeys, in my pockets!!](Gosh!!)", "()[]"));            
+        }
+
+        [TestMethod]
+        public void TestMethod8()
+        {
+            Assert.AreEqual(
+                true,
+                Kata.IsBalanced("(Hello Mother can you hear me ?)[Monkeys, in my pockets!!]", "()[]"));            
+        }
+
+        [TestMethod]
+        public void TestMethod9()
+        {                        
+            Assert.AreEqual(false, Kata.IsBalanced("Hello Mother can you hear me?)[Monkeys, in my pockets!!]", "()[]"));
+        }
+
+        [TestMethod]
+        public void TestMethod10()
+        {
+            Assert.AreEqual(true, Kata.IsBalanced("!Hello Mother can you hear me?$", "!$"));
+        }
     }
 }
