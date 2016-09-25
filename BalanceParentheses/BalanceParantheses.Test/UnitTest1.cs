@@ -71,5 +71,11 @@ namespace BalanceParantheses.Test
         {
             Assert.AreEqual(true, Kata.IsBalanced("!Hello Mother can you hear me?$", "!$"));
         }
+
+        [TestMethod]
+        public void TestMethod11()
+        {
+            Assert.AreEqual(false, Kata.IsBalanced("!Hello Mother can you hear me?", "!$"));
+        }
     }
 }
