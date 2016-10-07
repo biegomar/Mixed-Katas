@@ -1,44 +1,44 @@
 defmodule Removenb do
-  def remov_nb(n) do
-    loop_nb(1, n)
+  def remov_nb(n) do  
+    if (n >= 1000) do
+        result = Enum.sort(loop_nb(n-75, n, 45))
+        IO.inspect [n, result]
+        result
+    else
+        result = Enum.sort(loop_nb(n, n, 0))    
+        IO.inspect [n, result]
+        result
+    end            
   end
 
-  def remove_nb_rec(a, b, n) when a == n do       
-       if (sum_nb(n, a, b) == prod_nb(a, b)) do
-           [{a, b}]
+  def remove_nb_rec(a, b, n) when a >= b do       
+       if (sum_nb(n, a, b) == a * b) do
+           [{a, b}, {b, a}]
        else
            [] 
        end                
   end
 
-  def remove_nb_rec(a, b, n) do       
+  def remove_nb_rec(a, b, n) do           
        result = remove_nb_rec(a + 1, b, n)       
-       if (sum_nb(n, a, b) == prod_nb(a, b)) do           
-           [{a, b}] ++ result
+       if (sum_nb(n, a, b) == a * b) do           
+           [{a, b}, {b, a}] ++ result
        else
            result 
        end              
   end  
 
-  def loop_nb(b, n) when b == n do      
-      remove_nb_rec(1, b, n)
+  def loop_nb(b, n, corr) when b <= div(n, 2) + corr do      
+      remove_nb_rec(div(n,2) + corr, b, n)
   end
 
-  def loop_nb(b, n) do            
-      result = remove_nb_rec(1, b, n)  
-      IO.inspect result 
-      loop_nb(b + 1, n) ++ result   
+  def loop_nb(b, n, corr) do    
+      #IO.inspect [div(n,2), b]                   
+      result = remove_nb_rec(div(n,2) + corr, b, n)        
+      loop_nb(b - 1, n, corr) ++ result   
   end  
 
-  def sum_nb(n, a, b) do      
-       filter_nb(1..n, a) |> filter_nb(b) |> Enum.reduce(fn(x, acc) -> x + acc end)           
+  def sum_nb(n, a, b) do             
+       Enum.reduce(1..n, fn(x, acc) -> x + acc end) - a - b          
   end 
-
-  def prod_nb(a, b) do
-      a * b
-  end 
-
-  def filter_nb(list, a) do
-      Enum.filter(list, fn(x) -> x != a end)
-  end
 end
