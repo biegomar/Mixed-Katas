@@ -1,7 +1,34 @@
 defmodule Removenb do
   def remov_nb(n) do
-    # your code
+    loop_nb(1, n)
   end
+
+  def remove_nb_rec(a, b, n) when a == n do       
+       if (sum_nb(n, a, b) == prod_nb(a, b)) do
+           [{a, b}]
+       else
+           [] 
+       end                
+  end
+
+  def remove_nb_rec(a, b, n) do       
+       result = remove_nb_rec(a + 1, b, n)       
+       if (sum_nb(n, a, b) == prod_nb(a, b)) do           
+           [{a, b}] ++ result
+       else
+           result 
+       end              
+  end  
+
+  def loop_nb(b, n) when b == n do      
+      remove_nb_rec(1, b, n)
+  end
+
+  def loop_nb(b, n) do            
+      result = remove_nb_rec(1, b, n)  
+      IO.inspect result 
+      loop_nb(b + 1, n) ++ result   
+  end  
 
   def sum_nb(n, a, b) do      
        filter_nb(1..n, a) |> filter_nb(b) |> Enum.reduce(fn(x, acc) -> x + acc end)           
@@ -13,17 +40,5 @@ defmodule Removenb do
 
   def filter_nb(list, a) do
       Enum.filter(list, fn(x) -> x != a end)
-  end
-
-  def filter_list(list, sublist) do
-      list -- sublist
-  end
-    
-  def double_loop(n) do
-      Enum.reduce(1..n, fn(x, acc) -> Enum.reduce(1..n, x, fn(y, acc) ->           
-          IO.puts(x)
-          IO.puts(y)
-          IO.puts(x*y) 
-        end) end)
   end
 end

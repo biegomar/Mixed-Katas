@@ -18,11 +18,8 @@ defmodule RemovenbTest do
     assert Removenb.filter_nb(1..10, 2) == [1, 3, 4, 5, 6, 7, 8, 9, 10]
   end
 
-  test "filterList" do
-    assert Removenb.filter_list(1..10, [2, 6]) == [1, 3, 4, 5, 6, 7, 8, 9, 10]
-  end
-
-  test "doubleloop" do
-    Removenb.double_loop(10)
+  test "for_loop" do
+    result = Removenb.loop_nb(1, 21)  
+    IO.inspect result  
   end
 end
