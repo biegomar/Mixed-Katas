@@ -11,5 +11,7 @@ defmodule RemovenbTest do
     testing(4, 102, [{70, 73}, {73, 70}])
     testing(5, 110, [{70, 85}, {85, 70}])
     testing(6, 1006, [{546, 925}, {925, 546}])
+    testing(7, 103, [])
+    testing(8, 446, [{252, 393}, {393, 252}])
   end  
 end
