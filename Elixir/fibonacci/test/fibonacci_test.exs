@@ -13,4 +13,8 @@ defmodule FibonacciTest do
   test "map" do
     assert Fibonacci.mapp == 6765
   end
+
+  test "redp" do
+    assert Fibonacci.redp == 6765
+  end  
 end

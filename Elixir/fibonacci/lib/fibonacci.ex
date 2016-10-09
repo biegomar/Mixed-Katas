@@ -18,8 +18,17 @@ defmodule Fibonacci do
 
     def mapp do
         list = Enum.concat([1..1000])
-        result = Enum.map(list, fn(x) -> x * 2 end)
+        result = Enum.map(list, fn(x) -> Task.async(fn -> x * 2 end) end)
+        |> Enum.map(&Task.await/1)
         IO.inspect result
         result 
+    end
+
+    def redp do
+        list = Enum.concat([1..1000])
+        result = Enum.reduce(list, 0, fn(x, acc) -> Task.async(fn -> acc + x * 2 end) end) 
+        |> Enum.reduce(&Task.await/1)
+        IO.inspect result
+        result            
     end
 end
