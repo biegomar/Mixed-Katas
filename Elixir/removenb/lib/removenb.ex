@@ -1,13 +1,13 @@
 defmodule Removenb do
   def remov_nb(n) do    
+    IO.puts "n is #{n}"
     short_n = div(n,2)    
-    result = Enum.reduce(Enum.concat([n..1]), [], fn(x, acc) -> remove_nb_rec(short_n, x, n, sum_nb(n, short_n, x)) ++ acc end)     
-    |> Enum.sort
+    result = Enum.reduce(Enum.to_list(n..1), [], fn(x, acc) -> remove_nb_rec(short_n, x, n, sum_nb(n, short_n, x)) ++ acc end)    
     IO.inspect [n, result]
     result           
   end
 
-  def remove_nb_rec(a, b, n, sum) when a >= b or sum <= a * b do              
+  def remove_nb_rec(a, b, _, sum) when sum <= a * b or a >= b do              
        if (sum == a * b) do           
            [{a, b}, {b, a}]
        else
@@ -24,7 +24,7 @@ defmodule Removenb do
        end              
   end  
 
-  def sum_nb(n, a, b) do             
-       Enum.reduce(1..n, fn(x, acc) -> x + acc end) - a - b          
-  end     
+ def sum_nb(n, a, b) do
+     n * (n+1) / 2 - a - b
+  end
 end

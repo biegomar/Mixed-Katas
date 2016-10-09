@@ -13,5 +13,11 @@ defmodule RemovenbTest do
     testing(6, 1006, [{546, 925}, {925, 546}])
     testing(7, 103, [])
     testing(8, 446, [{252, 393}, {393, 252}])
-  end  
+    testing(9, 846, [{498, 717}, {717, 498}])
+    testing(10, 1000003, [{498, 717}, {717, 498}])    
+  end 
+
+  test "sum" do
+    assert Removenb.sum_nb(100, 1, 2) == 5047
+  end 
 end
