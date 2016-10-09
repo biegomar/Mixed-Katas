@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimplePigLatin", "SimplePigLatin\SimplePigLatin.csproj", "{0F432C7F-03F2-4B79-890B-D379E32DC6AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimplePigLatin.Test", "SimplePigLatin.Test\SimplePigLatin.Test.csproj", "{ACBC454E-8663-4DF3-90A3-77EF0F5F18E5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0F432C7F-03F2-4B79-890B-D379E32DC6AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F432C7F-03F2-4B79-890B-D379E32DC6AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F432C7F-03F2-4B79-890B-D379E32DC6AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F432C7F-03F2-4B79-890B-D379E32DC6AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACBC454E-8663-4DF3-90A3-77EF0F5F18E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACBC454E-8663-4DF3-90A3-77EF0F5F18E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACBC454E-8663-4DF3-90A3-77EF0F5F18E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACBC454E-8663-4DF3-90A3-77EF0F5F18E5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
