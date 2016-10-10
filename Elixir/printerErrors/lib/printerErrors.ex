@@ -1,6 +1,7 @@
 defmodule PrinterErrors do
-  def printer_error(s) do
-    "3" <> "/" <> Integer.to_string(String.length(s))
-    # Enum.reduce(Enum.chunk(String.to_char_list("HellO"),1), %{}, fn(x, y) -> y + 1 end); kleine Idee
+  def printer_error(s) do            
+    reduced = Regex.replace(~r/[n-z]/, s, "")    
+    result = "#{String.length(s) - String.length(reduced)}/#{Integer.to_string(String.length(s))}"  
+    result
   end
 end
