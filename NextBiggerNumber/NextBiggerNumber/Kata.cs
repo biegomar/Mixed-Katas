@@ -12,25 +12,46 @@ namespace NextBiggerNumber
         {
             long result = -1;
             var tokens = n.ToString().ToList();
-            for (int i = n.ToString().Length - 1; i > 0; i--)
+            for (var i = n.ToString().Length - 1; i > 0; i--)
             {
                 if (Convert.ToInt16(tokens[i]) > Convert.ToInt16(tokens[i-1]))
                 {
-                    var swap = tokens[i];
-                    tokens[i] = tokens[i - 1];
-                    tokens[i - 1] = swap;
+                    var swapIndex = i-1;
+                    var higherIndex = i;
+                    for (var j = n.ToString().Length - 1; j >= i; j--)
+                    {
+                        if (tokens[j] < tokens[higherIndex] && tokens[swapIndex] < tokens[j])
+                        {
+                            higherIndex = j;
+                        }
+                    }
 
-                    var sortArray = new char[tokens.Count - i];
-                    tokens.CopyTo(i, sortArray, 0, tokens.Count - i);
-                    var sortList = sortArray.ToList();
-                    sortList.Sort();
-                    var resultList = new char[tokens.Count];
-                    tokens.CopyTo(0, resultList, 0, i);
-                    sortList.CopyTo(0, resultList, i, sortList.Count);
+                    SwapItem(tokens, swapIndex, higherIndex);
+
+                    var resultList = ResultList(tokens, i);
                     return Convert.ToInt64(new string(resultList.ToArray()));
                 }
             }
             return result;
+        }
+
+        private static char[] ResultList(List<char> tokens, int i)
+        {
+            var sortArray = new char[tokens.Count - i];
+            tokens.CopyTo(i, sortArray, 0, tokens.Count - i);
+            var sortList = sortArray.ToList();
+            sortList.Sort();
+            var resultList = new char[tokens.Count];
+            tokens.CopyTo(0, resultList, 0, i);
+            sortList.CopyTo(0, resultList, i, sortList.Count);
+            return resultList;
+        }
+
+        private static void SwapItem(List<char> tokens, int swapIndex, int higherIndex)
+        {
+            var swapItem = tokens[swapIndex];
+            tokens[swapIndex] = tokens[higherIndex];
+            tokens[higherIndex] = swapItem;
         }
     }
 }
