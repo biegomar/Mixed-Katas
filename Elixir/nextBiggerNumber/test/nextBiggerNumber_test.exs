@@ -10,5 +10,6 @@ defmodule NextBiggerNumberTest do
     assert nextBigger(9) == -1
     assert nextBigger(11) == -1
     assert nextBigger(531) == -1 
+    #assert nextBigger(121111111111) == 211111111111 
   end
 end
