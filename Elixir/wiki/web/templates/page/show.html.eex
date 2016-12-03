@@ -1,5 +1,6 @@
 <h1><%= @page.title %></h1>
 
 <div>
-    <%= @page.body %>
+    <%= link "Editieren", to: page_path(@conn, :edit, @page.title) %>
+    <%= link "Delete", to: page_path(@conn, :delete, @page.title), method: :delete, class: "btn btn-danger" %>
 </div>
