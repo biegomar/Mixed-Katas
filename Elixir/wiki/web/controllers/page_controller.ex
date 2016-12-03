@@ -19,6 +19,15 @@ defmodule Wiki.PageController do
 
   def edit(conn, %{"id" => id}) do
     page = Repo.get_by!(Wiki.Page, title: id)
-    render conn, "edit.html", page: page
+    
+    changeset = Wiki.Page.changeset(page)
+    render conn, "edit.html", changeset: changeset
+  end
+
+  def update(conn, %{"id" => id, "page" => page_params}) do
+    page = Repo.get_by!(Wiki.Page, title: id)
+
+    changeset = Wiki.Page.changeset(page, page_params)
+    render conn, "edit.html", page: page, changeset: changeset
   end
 end
