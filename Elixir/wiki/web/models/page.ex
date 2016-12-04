@@ -1,5 +1,6 @@
 defmodule Wiki.Page do
   use Wiki.Web, :model
+  @derive {Phoenix.Param, key: :title}
 
   schema "pages" do
     field :title, :string
@@ -15,5 +16,6 @@ defmodule Wiki.Page do
     struct
     |> cast(params, [:title, :body])
     |> validate_required([:title, :body])
+    |> unique_constraint(:title)
   end
 end

@@ -1,0 +1,294 @@
+2016-12-03 Elixir Workshop
+
+TYPES
+
+Strings werden intern immer als binaries gespeichert
+
+"hello"  == <<104, 101, 108, 108, 111>>
+
+
+cond als Alternative zu "if else if else..."
+
+cond do
+  1 + 1 == 99 -> "Try"
+  2 + 2 == 4 -> :good
+end
+
+
+Phoenix-Framework
+- schnell
+- concurrent
+- simple abstractions
+- interactive
+
+nutzt als Build-Tool Brunch.js
+
+
+Datenbankzugriffe werden in phoenix mittels ecto realisiert.
+
+@behaviour ist wie ein Interface aus anderen Sprachen
+
+generatoren unter phoenix verändern -> deps/phoenix/priv/templates nach priv kopieren
+
+externe Dependencies -> hex
+
+==================================
+Task 1
+==================================
+Install Phoenix
+
+$ mix archive.install https://github.com/phoenixframework/archives/raw/master/phoenix_new.ez
+Create a new project
+
+$ mix phoenix.new wiki
+After the successful installation
+
+$ cd wiki
+$ mix ecto.create
+$ mix phoenix.server
+Open your browser: http://localhost:4000
+
+Hint
+
+If you get an database error like this:
+
+** (Mix) The database for Wiki.Repo couldn't be created: an exception was raised:
+    ** (DBConnection.ConnectionError) tcp connect: connection refused - :econnrefused
+        (db_connection) lib/db_connection/connection.ex:148: DBConnection.Connection.connect/2
+        (connection) lib/connection.ex:622: Connection.enter_connect/5
+        (stdlib) proc_lib.erl:247: :proc_lib.init_p_do_apply/3
+Edit the database configuration
+
+Open config/dev.exs and look for Wiki.Repo
+Change username and password to your postgres database
+
+==================================
+Task 2
+==================================
+Add a static list to web/controllers/page_controller.ex
+Insert another example page
+Remove everything from web/templates/page/index.html.eex
+Insert the html snippet and add some custom styles
+
+Hint
+page_controller.ex
+
+pages = [
+  %{title: "Main Page", body: "Welcome"},
+]
+render conn, "index.html", pages: pages
+index.html.eex
+
+<h1>Pages</h1>
+
+<ul>
+  <%= for page <- @pages do %>
+    <li><%= link page.title, to: page.title %></li>
+  <% end %>
+</ul>
+
+==================================
+Task 3
+==================================
+Generate the model and migrate
+Start a phoenix console
+Insert your static data into the database
+Query pages from database in page_controller.ex
+
+Model and migration:
+
+$ mix phoenix.gen.model Page pages title:string body:text
+$ mix ecto.migrate
+Phoenix console:
+
+iex -S mix
+Insert command for the consoler:
+
+alias Wiki.Repo
+Repo.insert!(%Wiki.Page{...})
+Command to query pages:
+
+Repo.all(Wiki.Page)
+
+==================================
+Task 4
+==================================
+Create a template web/templates/page/show.html.eex
+Output the @page.title in a <h1> tag
+Output the @page.body in a <div> tag
+Create an action show in the page_controller.ex
+Load the page data with a correct render function
+Add a route in router.ex
+
+page_controller.ex
+
+def show(conn, params) do
+  page = Repo.get_by!(Wiki.Page, title: params["id"])
+  # render show here and pass page
+end
+router.ex
+
+get "/:id", PageController, :show
+
+Use pattern matching for the params:
+
+%{"id" => id}
+
+==================================
+Task 5
+==================================
+Copy page#show action to page#edit
+Use pattern matching for the params
+Set the template title to Edit <%= @page.title %>
+Add the route
+
+page_controller.ex
+
+def edit(conn, %{"id" => id}) do
+router.ex
+
+get "/:id/edit", PageController, :edit
+
+==================================
+Task 6
+==================================
+Create a new changeset after Repo.get_by in the edit action
+Pass changeset to the template in the render "edit.html" call
+Add a new form to the edit.html.eex (see snippet)
+Add another input as textarea for the body attribute (Documentation)
+Add an attribute rows: 10 to the textarea
+
+New changeset:
+
+changeset = Wiki.Page.changeset(page)
+form
+
+<%= form_for @changeset, "/update", fn f -> %>
+  <div class="form-group">
+    <%= label f, :title, class: "control-label" %>
+    <%= text_input f, :title, class: "form-control" %>
+    <%= error_tag f, :title %>
+  </div>
+
+  <div class="form-group">
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+==================================
+Task 7
+==================================
+Add a page#update action (you don’t need a new template)
+Add new router action
+Change link in edit.html.eex from "/update" to page_path(@conn, :update, @page.title)
+
+page_controller.ex
+
+def update(conn, %{"id" => id, "page" => page_params}) do
+  page = Repo.get_by!(Wiki.Page, title: id)
+
+  changeset = Wiki.Page.changeset(page, page_params)
+  render conn, "edit.html", page: page, changeset: changeset
+end
+router.ex
+
+put "/:id", PageController, :update
+
+==================================
+Task 8
+==================================
+Replace the render function with the complete update statement
+Add a link to the main page and edit page in show.html.eex
+
+Update:
+
+case Repo.update(changeset) do
+  {:ok, updated_page} ->
+    redirect conn, to: page_path(conn, :show, updated_page.title)
+  {:error, changeset} ->
+    render conn, "edit.html", page: page, changeset: changeset
+end
+Links:
+
+Take a look at the link helper in index.html.eex. Use page_path(@conn, :...) instead.
+
+==================================
+Task 9
+==================================
+Add a delete action to page_controller.ex
+Add a delete button to show.html.eex
+
+def delete(conn, %{"id" => id}) do
+  # page = ... (load page here)
+  
+  Repo.delete!(page)
+  redirect conn, to: page_path(conn, :index)
+end
+show.html.eex
+
+<%= link "Delete", to: page_path(@conn, :delete, @page.title), method: :delete, class: "btn btn-danger" %>
+
+==================================
+Task 10
+==================================
+Generate complete page resource
+Remove get and put routes from router.ex
+Add resources "/", PageController to router.ex
+Readd rows: 10 to form.html.eex
+Change <%= @page.body %> to <%= text_to_html(@page.body) %> in show.html.eex
+Add @derive to page.ex
+In page_controller.ex replace Repo.get!(Page, id) with Repo.get_by!(Page, title: id)
+
+Scaffold generator:
+
+Confirm overrides with yes.
+
+mix phoenix.gen.html Page pages title:string body:text --no-model
+page.ex
+
+@derive {Phoenix.Param, key: :title}
+schema "pages" do
+# ...
+
+==================================
+Task 11
+==================================
+Add earmark to dependencies and applications in mix.exs
+Invoke mix deps.get in console
+Add new function wiki_to_html(markdown) to page_view.ex
+Change text_to_html to wiki_to_html in show.html.eex
+
+mix.exs
+
+defp deps do
+  [{:earmark, "~> 1.0"},
+   {:phoenix, "~> 1.2.1"},
+   ...]
+end
+page_view.ex
+
+def wiki_to_html(nil), do: ""
+def wiki_to_html(markdown) do
+  markdown
+  |> String.replace(~r/\[\[([\w|\s]+)\]\]/, "[\\1](/\\1)")
+  |> Earmark.to_html()
+  |> raw()
+end
+
+==================================
+Task 12
+==================================
+Create a new migration for an unique index
+Add create unique_index(:pages, :title) do def change do method
+Append unique constraint to page.ex in def changset(...)
+
+Console:
+
+$ mix ecto.gen.migration add_unique_index_for_title_in_page
+page.ex
+
+|> unique_constraint(:title)
+
+==================================
+Task 13
+==================================
