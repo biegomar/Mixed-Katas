@@ -330,3 +330,25 @@ defp load_page(conn) do
   |> Repo.get_by!(title: conn.params["page_id"])
   |> Repo.preload([:comments])
 end
+
+==================================
+Task 15
+==================================
+Replace Comment with assoc(page, :comments) in index() and delete()
+Add %Comment{page_id: page.id} to create()
+Test if it works
+Add render snippet to the end of page/show.html.eex page
+Preload comments in page_controller.ex action show
+Change redirect paths in comment_controller.ex to page_path(conn, :show, page)
+
+comment_controller.ex
+
+changeset = Comment.changeset(%Comment{page_id: page.id}, comment_params)
+page/show.html.eex
+
+<%= render Wiki.CommentView, "index.html", conn: @conn, page: @page, comments: @page.comments %>
+page_controller.ex
+
+Preload:
+
+page = Repo.get_by!(Page, title: id) |> Repo.preload(:comments)
