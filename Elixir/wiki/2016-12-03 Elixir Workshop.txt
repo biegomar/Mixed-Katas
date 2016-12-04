@@ -292,3 +292,41 @@ page.ex
 ==================================
 Task 13
 ==================================
+Generate migration for comments
+Execute migration with mix ecto.migrate
+Add has_many :comments, Wiki.Comment, on_delete: :delete_all to page.ex in schema
+Remove comment_controller.ex actions: show, edit, update
+Remove templates: comment/show.html, comment/edit
+Remove unused edit/show links from comment/index.html
+Add resouces "/comments" to router.ex before resources “/“
+Create a new comment at http://localhost:4000/comments
+
+Migration:
+
+mix phoenix.gen.html Comment comments body:text page_id:references:pages
+router.ex
+
+resources "/comments", CommentController, except: [:show, :edit, :update]
+
+==================================
+Task 14
+==================================
+Change to nested routes in router.ex
+Create method defp load_page(conn) in comments_controller.ex
+Add page = load_page(conn) at the beginning of every action
+Pass page: page to every render function
+Replace comment_path( with page_comment_path( in every file and add @page/page as parameter after the atom (e.g. :update)
+Create a test comment at http://localhost:4000/YourPage/comments
+
+router.ex
+
+resources "/", PageController do
+  resources "/comments", CommentController, except: [:show, :edit, :update]
+end
+comment_controller.ex:
+
+defp load_page(conn) do
+  Wiki.Page
+  |> Repo.get_by!(title: conn.params["page_id"])
+  |> Repo.preload([:comments])
+end
