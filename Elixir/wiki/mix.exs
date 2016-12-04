@@ -18,7 +18,7 @@ defmodule Wiki.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Wiki, []},
-     applications: [:earmark, :phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
+     applications: [:comeonin, :earmark, :phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
                     :phoenix_ecto, :postgrex]]
   end
 
@@ -30,7 +30,8 @@ defmodule Wiki.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:earmark, "~> 1.0"},
+    [{:comeonin, "~> 3.0"},
+     {:earmark, "~> 1.0"},
      {:phoenix, "~> 1.2.1"},
      {:phoenix_pubsub, "~> 1.0"},
      {:phoenix_ecto, "~> 3.0"},

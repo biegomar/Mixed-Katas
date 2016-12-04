@@ -389,3 +389,43 @@ if (element) {
 comment_controller.ex
 
 Wiki.Endpoint.broadcast! "page:#{page.id}", "new_comment"
+
+==================================
+Task 17
+==================================
+Generate user model
+Add resources "/users", UserController before resources "/", PageController in router.ex
+Migrate database with mix ecto.migrate
+Add field :password, :string, virtual: true to schema in user.ex
+Replace ecrypted_password with password in changeset in user.ex
+In user/form.html.eex replace encrypted_password with password
+Add a new modify_password_changeset to user.ex
+Change User.changeset to User.modify_password_changeset in user_controller.ex create and update
+Create a new user
+
+Generate user model:
+
+mix phoenix.gen.html User users email:unique encrypted_password
+user.ex
+
+def modify_password_changeset(struct, params \\ %{}) do
+  struct
+  |> cast(params, [:email, :password])
+  |> changeset()
+  |> encrypt_password()
+end
+
+defp encrypt_password(%Ecto.Changeset{} = changeset) do
+  string = hashed_password(changeset.params["password"])
+  put_change(changeset, :encrypted_password, string)
+end
+
+defp hashed_password(password) do
+  :crypto.hash(:sha256, password) |> Base.encode16
+end
+
+Replace :crypto.hash with a popular hex package: comeonin.
+
+Use:
+
+Comeonin.Bcrypt.hashpwsalt(password)
