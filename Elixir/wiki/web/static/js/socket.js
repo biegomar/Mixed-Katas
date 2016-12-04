@@ -66,6 +66,10 @@ if (element) {
   pageChannel.on("new_comment", () => {
     location.reload()
   });
+
+  pageChannel.on("delete_comment", () => {
+    location.reload()
+  });
 }
 
 export default socket

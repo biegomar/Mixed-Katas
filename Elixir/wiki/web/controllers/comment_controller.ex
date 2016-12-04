@@ -40,6 +40,8 @@ defmodule Wiki.CommentController do
     # it to always work (and if it does not, it will raise).
     Repo.delete!(comment)
 
+    Wiki.Endpoint.broadcast! "page:#{page.id}", "delete_comment", %{}
+
     conn
     |> put_flash(:info, "Comment deleted successfully.")
     |> redirect(to: page_path(conn, :show, page))
