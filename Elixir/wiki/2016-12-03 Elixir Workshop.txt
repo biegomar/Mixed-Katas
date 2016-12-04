@@ -32,6 +32,8 @@ generatoren unter phoenix verändern -> deps/phoenix/priv/templates nach priv ko
 
 externe Dependencies -> hex
 
+sockets -> auch über Generatoren von phoenix
+
 ==================================
 Task 1
 ==================================
@@ -352,3 +354,38 @@ page_controller.ex
 Preload:
 
 page = Repo.get_by!(Page, title: id) |> Repo.preload(:comments)
+
+==================================
+Task 16
+==================================
+Generate a new channel with mix phoenix.gen.channel Page
+Add channel config channel "page:*", Wiki.PageChannel to user_socket.ex
+Uncomment the line import socket from "./socket" in web/static/js/app.js
+Replace everything between socket.connect() and export default socket with js snippet from hints
+Add data-page-id="<%= @page.id %>" to h2 tag in page/show.html.eex
+Add broadcat to create method in comment_controller.ex
+
+page_channel.ex
+
+def join("page:" <> page_id, payload, socket) do
+socket_with_page_id = assign(socket, :page_id, page_id)
+{:ok, socket_with_page_id}    
+socket.js
+
+let element = document.querySelectorAll("[data-page-id]")[0]
+
+if (element) {
+  let pageId = element.getAttribute("data-page-id")
+  let pageChannel = socket.channel(`page:${pageId}`, {})
+
+  pageChannel.join()
+    .receive("ok", resp => { console.log("Joined successfully", resp) })
+    .receive("error", resp => { console.log("Unable to join", resp) })
+
+  pageChannel.on("new_comment", () => {
+    location.reload()
+  });
+}
+comment_controller.ex
+
+Wiki.Endpoint.broadcast! "page:#{page.id}", "new_comment"

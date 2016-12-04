@@ -23,6 +23,7 @@ defmodule Wiki.CommentController do
 
     case Repo.insert(changeset) do
       {:ok, _comment} ->
+        Wiki.Endpoint.broadcast! "page:#{page.id}", "new_comment", %{}
         conn
         |> put_flash(:info, "Comment created successfully.")
         |> redirect(to: page_path(conn, :show, page))
