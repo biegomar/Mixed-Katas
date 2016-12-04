@@ -32,7 +32,11 @@ defmodule Wiki.User do
   end
 
   defp hashed_password(password) do
-    #:crypto.hash(:sha256, password) |> Base.encode16
-    Comeonin.Bcrypt.hashpwsalt(password) |> Base.encode16
+    :crypto.hash(:sha256, password) |> Base.encode16
+    #Comeonin.Bcrypt.hashpwsalt(password) |> Base.encode16
+  end
+
+  def valid_password?(%__MODULE__{encrypted_password: encrypted_password}, input_password) do
+    encrypted_password == hashed_password(input_password)
   end
 end

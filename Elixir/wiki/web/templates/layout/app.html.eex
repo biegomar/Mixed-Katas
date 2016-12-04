@@ -31,5 +31,10 @@
 
     </div> <!-- /container -->
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+    <%= if @conn.assigns.current_user do %>
+    <%= link "Logout", to: session_path(@conn, :delete), method: :post %>
+    <% else %>
+      <%= link "Login", to: session_path(@conn, :new) %>
+    <% end %>
   </body>
 </html>

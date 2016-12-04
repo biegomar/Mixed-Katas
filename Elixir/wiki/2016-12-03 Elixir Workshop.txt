@@ -429,3 +429,111 @@ Replace :crypto.hash with a popular hex package: comeonin.
 Use:
 
 Comeonin.Bcrypt.hashpwsalt(password)
+
+==================================
+Task 18
+==================================
+Write a new method called valid_password? in the user.ex that checks if the entered password and the user password match
+Create a session_controller.ex with the actions new, create and delete
+Create the login form in /web/templates/session/new.html.eex
+Create the SessionView in /web/views/session_view.ex
+Add the routes [GET] /login, [POST] /login and [POST] /logout to the router.ex before resources "/users", UserController
+Create a Plug called Wiki.AuthenticationPlug in /lib/wiki/plugs/authentication_plug.ex
+Add the Login and Logout link to the navigation in /web/templates/layout/app.html.eex
+Use the plug Wiki.AuthenticationPlug on every page load by adding it to the browser pipeline in router.ex
+
+user.ex
+
+def valid_password?(%__MODULE__{encrypted_password: encrypted_password}, input_password) do
+  encrypted_password == hashed_password(input_password)
+end
+session_controller.ex
+
+defmodule Wiki.SessionController do
+  use Wiki.Web, :controller
+
+  alias Wiki.User
+
+  def new(conn, _params) do
+    # you need to create a changeset here
+    # render the new template and pass the changeset to it
+  end
+
+  def create(conn, %{"user" => user_params}) do
+    user = Repo.get_by(User, email: user_params["email"])
+
+    if user && ......... do # call the User.valid_password? method here
+      conn
+      |> put_session(:user_id, user.id)
+      |> redirect(to: page_path(conn, :index))
+    else
+      changeset =
+        %User{email: user_params[:email]}
+        |> User.changeset()
+        |> Ecto.Changeset.add_error(:base, "email or password is invalid")
+
+      new_changeset = %{changeset | action: :insert, errors: changeset.errors}
+      render(conn, "new.html", changeset: new_changeset)
+    end
+  end
+
+  def delete(conn, _) do
+    conn
+    |> delete_session(:user_id)
+    |> redirect(to: session_path(conn, :new))
+  end
+end
+router.ex
+
+get "/login", SessionController, :new
+post "/login", SessionController, :create
+post "/logout", SessionController, :delete
+new.html.eex
+
+Use the following code to render the cutsom error
+
+<div class="form-group">
+    <%= error_tag f, :base %>
+</div>
+authentication_plug.ex
+
+defmodule Wiki.AuthenticationPlug do
+  alias Wiki.{Repo, User}
+  use Phoenix.Controller
+  import Plug.Conn
+
+  def init(opts), do: opts
+
+  def call(conn, _opts) do
+    user_id = get_session(conn, :user_id)
+
+    user =
+      if user_id do
+        get_user_from_database(user_id)
+      else
+        nil
+      end
+
+    assign(conn, :current_user, user)
+  end
+
+  defp get_user_from_database(user_id) do
+    case Repo.get(User, user_id) do
+      %User{} = user -> user
+      _              -> nil
+    end
+  end
+end
+app.html.eex
+
+<%= if @conn.assigns.current_user do %>
+  <%= link "Logout", to: session_path(@conn, :delete), method: :post %>
+<% else %>
+  <%= link "Login", to: session_path(@conn, :new) %>
+<% end %>
+AuthenticationPlug usage
+
+pipeline :browser do
+  ...
+  plug Wiki.AuthenticationPlug
+end
