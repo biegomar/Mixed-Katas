@@ -7,6 +7,6 @@ defmodule PriceOfMangoesTest do
     assert mango(9, 5) == 30
     assert mango(0, 5) == 0
     assert mango(9, 0) == 0
-    assert mango(7541, 424) == 2131872
+    assert mango(7541, 424) == 2_131_872
   end
 end
