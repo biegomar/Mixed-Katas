@@ -1,0 +1,6 @@
+<h2>New comment</h2>
+
+<%= render "form.html", changeset: @changeset,
+                        action: page_comment_path(@conn, :create, @page) %>
+
+<%= link "Back", to: page_comment_path(@conn, :index, @page) %>
