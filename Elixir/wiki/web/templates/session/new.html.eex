@@ -1,0 +1,12 @@
+<%= form_for @changeset, session_path(@conn, :create), fn f -> %>
+<div class="form-group">
+    <%= label f, "EMail", class: "control-label" %>
+    <%= text_input f, :email, class: "form-control" %>
+    <%= label f, "Passwort", class: "control-label" %>
+    <%= text_input f, :password, class: "form-control" %>
+    <%= error_tag f, :base %>
+  </div>
+<div class="form-group">
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>
