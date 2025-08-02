@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetTheLoop", "GetTheLoop\GetTheLoop.csproj", "{505ECB30-AB09-480E-9A7C-8BCB8D694275}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetTheLoop.Test", "GetTheLoop.Test\GetTheLoop.Test.csproj", "{4CEE9B8A-106E-404E-B533-90C099E9A72D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{505ECB30-AB09-480E-9A7C-8BCB8D694275}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{505ECB30-AB09-480E-9A7C-8BCB8D694275}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{505ECB30-AB09-480E-9A7C-8BCB8D694275}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{505ECB30-AB09-480E-9A7C-8BCB8D694275}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CEE9B8A-106E-404E-B533-90C099E9A72D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CEE9B8A-106E-404E-B533-90C099E9A72D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CEE9B8A-106E-404E-B533-90C099E9A72D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CEE9B8A-106E-404E-B533-90C099E9A72D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

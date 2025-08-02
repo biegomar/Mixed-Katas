@@ -1,8 +1,8 @@
-defmodule PriceOfMangoes.Mixfile do
+defmodule MakingChange.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :priceOfMangoes,
+    [app: :makingChange,
      version: "0.1.0",
      elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,

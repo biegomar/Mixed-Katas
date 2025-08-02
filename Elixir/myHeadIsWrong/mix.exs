@@ -1,8 +1,8 @@
-defmodule PriceOfMangoes.Mixfile do
+defmodule MyHeadIsWrong.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :priceOfMangoes,
+    [app: :myHeadIsWrong,
      version: "0.1.0",
      elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
@@ -27,6 +27,6 @@ defmodule PriceOfMangoes.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:credo, "~> 0.6", only: [:dev, :test]}]
+    []
   end
 end
